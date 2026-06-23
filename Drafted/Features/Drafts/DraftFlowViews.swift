@@ -33,16 +33,16 @@ struct NewDraftView: View {
 
     private var categoryPicker: some View {
         VStack(spacing: 22) {
-            Text("what are we drafting?")
-                .font(.system(size: 44, weight: .black))
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .minimumScaleFactor(0.76)
+            ScreenTitle(
+                title: "New Draft",
+                subtitle: "Choose a category, then set up the room.",
+                alignment: .center
+            )
                 .padding(.horizontal, 24)
 
             PillSelector(values: CategorySection.allCases, title: \.title, selection: $selectedSection)
 
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 16)], spacing: 16) {
                 ForEach(appModel.categories.filter { $0.tags.contains(selectedSection) }) { category in
                     Button {
                         appModel.tap(.medium)
@@ -65,31 +65,32 @@ struct NewDraftView: View {
                     selectedCategory = nil
                 } label: {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 17, weight: .black))
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(.white)
                         .frame(width: 46, height: 46)
                         .background(.ultraThinMaterial, in: Circle())
                 }
-                Text(category.title)
-                    .font(.system(size: 42, weight: .black))
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.75)
+                ScreenTitle(title: category.title, subtitle: nil)
+                    .layoutPriority(1)
                 Spacer()
             }
             .padding(.horizontal, 24)
 
-            GlassCard(cornerRadius: 34, material: .regularMaterial) {
-                VStack(spacing: 24) {
+            GlassCard(cornerRadius: 28, material: .regularMaterial) {
+                VStack(spacing: 22) {
                     HStack(spacing: 18) {
-                        CategorySymbol(symbol: category.symbol, size: 76)
+                        CategorySymbol(symbol: category.symbol, size: 62)
                         VStack(alignment: .leading, spacing: 8) {
                             Text(category.subtitle)
-                                .font(.system(.headline, weight: .bold))
+                                .font(.system(.headline, weight: .semibold))
                                 .foregroundStyle(.white)
+                                .fixedSize(horizontal: false, vertical: true)
                             Text("Room code generates after setup.")
                                 .font(.system(.subheadline, weight: .semibold))
                                 .foregroundStyle(DraftedColors.secondaryText)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
+                        .layoutPriority(1)
                     }
 
                     StepperRow(title: "Rounds", value: $rounds, range: 1...8)
@@ -97,7 +98,7 @@ struct NewDraftView: View {
 
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Mode")
-                            .font(.system(.headline, weight: .black))
+                            .font(.system(.headline, weight: .semibold))
                             .foregroundStyle(.white)
                         HStack(spacing: 10) {
                             ForEach(DraftMode.allCases) { candidate in
@@ -106,7 +107,7 @@ struct NewDraftView: View {
                                     mode = candidate
                                 } label: {
                                     Text(candidate.title)
-                                        .font(.system(.headline, weight: .black))
+                                        .font(.system(.headline, weight: .semibold))
                                         .foregroundStyle(mode == candidate ? .black : .white)
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 14)
@@ -137,15 +138,12 @@ struct JoinCodeView: View {
     var body: some View {
         ScreenScaffold {
             VStack(alignment: .leading, spacing: 24) {
-                Text("enter the room code")
-                    .font(.system(size: 48, weight: .black))
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.74)
+                ScreenTitle(title: "Join Draft", subtitle: "Enter a room code from a friend.", alignment: .center)
 
-                GlassCard(cornerRadius: 34, material: .regularMaterial) {
+                GlassCard(cornerRadius: 28, material: .regularMaterial) {
                     VStack(spacing: 20) {
                         TextField("DRAFT-X7K9", text: $code)
-                            .font(.system(size: 34, weight: .black, design: .monospaced))
+                            .font(.system(size: 30, weight: .semibold, design: .monospaced))
                             .textInputAutocapitalization(.characters)
                             .autocorrectionDisabled()
                             .multilineTextAlignment(.center)
@@ -251,36 +249,35 @@ struct DraftRoomView: View {
 
     private func roomTopBar(_ room: DraftRoom) -> some View {
         GlassCard(cornerRadius: 28, material: .regularMaterial) {
-            VStack(spacing: 16) {
+            VStack(spacing: 14) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(room.code)
-                            .font(.system(.headline, weight: .black, design: .monospaced))
+                            .font(.system(.headline, weight: .semibold, design: .monospaced))
                             .foregroundStyle(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.72)
                         Text("Round \(currentRound(room)) of \(room.rounds)")
                             .font(.system(.caption, weight: .bold))
                             .foregroundStyle(DraftedColors.secondaryText)
+                            .lineLimit(1)
                     }
+                    .layoutPriority(1)
                     Spacer()
-                    Text("\(myLives(room)) lives")
-                        .font(.system(.caption, weight: .black))
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.white, in: Capsule())
+                    StatusPill(title: "\(myLives(room)) lives", isProminent: true)
                 }
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(room.players) { player in
                             VStack(spacing: 5) {
-                                AvatarView(player: player, size: 44)
+                                AvatarView(player: player, size: 40)
                                 Text(player.displayName)
                                     .font(.system(size: 10, weight: .bold))
                                     .foregroundStyle(isCurrentTurn(player, room) ? .white : DraftedColors.tertiaryText)
                                     .lineLimit(1)
                             }
-                            .padding(8)
+                            .padding(7)
                             .background(isCurrentTurn(player, room) ? Color.white.opacity(0.13) : Color.clear, in: Capsule())
                         }
                     }
@@ -295,25 +292,28 @@ struct DraftRoomView: View {
         let player = room.players.first { $0.id == currentID }
         let isMine = currentID == appModel.currentUser.id
 
-        return GlassCard(cornerRadius: 34) {
+        return GlassCard(cornerRadius: 28) {
             HStack(spacing: 16) {
                 Image(systemName: isMine ? "hand.tap.fill" : "hourglass")
-                    .font(.system(size: 28, weight: .black))
+                    .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(isMine ? .black : .white)
-                    .frame(width: 64, height: 64)
+                    .frame(width: 56, height: 56)
                     .background(isMine ? Color.white : Color.white.opacity(0.08), in: Circle())
                 VStack(alignment: .leading, spacing: 6) {
                     Text(isMine ? "your pick" : "\(player?.displayName ?? "Someone") is picking")
-                        .font(.system(size: 32, weight: .black))
+                        .font(.system(size: 28, weight: .bold))
                         .foregroundStyle(.white)
+                        .lineLimit(2)
                         .minimumScaleFactor(0.78)
                     Text(room.status == .judging ? "All picks are in. Send it to the judge." : "Timer is live. Make it count.")
                         .font(.system(.subheadline, weight: .semibold))
                         .foregroundStyle(DraftedColors.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
+                .layoutPriority(1)
                 Spacer()
             }
-            .padding(20)
+            .padding(18)
         }
     }
 
@@ -336,7 +336,7 @@ struct DraftRoomView: View {
         return VStack(spacing: 14) {
             SectionHeader(title: "Draft Board", subtitle: "\(options.count) picks left")
 
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 155), spacing: 14)], spacing: 14) {
                 ForEach(options) { option in
                     PickOptionCard(option: option) {
                         let status = appModel.makePick(roomID: room.id, option: option)
@@ -361,24 +361,29 @@ struct DraftRoomView: View {
         VStack(spacing: 14) {
             SectionHeader(title: "Live Rosters", subtitle: "Tap a rival pick to steal it for one life.")
             ForEach(room.players) { player in
-                GlassCard(cornerRadius: 28) {
+                GlassCard(cornerRadius: 24) {
                     VStack(alignment: .leading, spacing: 14) {
                         HStack(spacing: 12) {
-                            AvatarView(player: player, size: 46)
+                            AvatarView(player: player, size: 42)
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(player.displayName)
-                                    .font(.system(.headline, weight: .black))
+                                    .font(.system(.headline, weight: .semibold))
                                     .foregroundStyle(.white)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.72)
                                 Text("\(player.lives) lives - \(appModel.roster(for: player.id, in: room).count) picks")
                                     .font(.system(.caption, weight: .bold))
                                     .foregroundStyle(DraftedColors.secondaryText)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.74)
                             }
+                            .layoutPriority(1)
                             Spacer()
                             if player.id != appModel.currentUser.id {
                                 Button("Trade") {
                                     tradeTarget = player
                                 }
-                                .font(.system(.caption, weight: .black))
+                                .font(.system(.caption, weight: .semibold))
                                 .foregroundStyle(.black)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
@@ -404,16 +409,19 @@ struct DraftRoomView: View {
                                             Text(pick.name)
                                                 .font(.system(.subheadline, weight: .bold))
                                                 .foregroundStyle(.white)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.74)
                                             Text("Pick \(pick.pickNumber)")
                                                 .font(.system(.caption2, weight: .bold))
                                                 .foregroundStyle(DraftedColors.secondaryText)
                                         }
+                                        .layoutPriority(1)
                                         Spacer()
                                         if player.id != appModel.currentUser.id && room.status != .completed {
                                             Button("Steal") {
                                                 appModel.stealPick(roomID: room.id, pickID: pick.id)
                                             }
-                                            .font(.system(.caption2, weight: .black))
+                                            .font(.system(.caption2, weight: .semibold))
                                             .foregroundStyle(.white)
                                             .padding(.horizontal, 10)
                                             .padding(.vertical, 7)
@@ -439,7 +447,7 @@ struct DraftRoomView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Trade proposed")
-                                    .font(.system(.headline, weight: .black))
+                                    .font(.system(.headline, weight: .semibold))
                                     .foregroundStyle(.white)
                                 Text(trade.status.rawValue.capitalized)
                                     .font(.system(.caption, weight: .bold))
@@ -450,7 +458,7 @@ struct DraftRoomView: View {
                                 Button("Accept") {
                                     appModel.acceptTrade(roomID: room.id, tradeID: trade.id)
                                 }
-                                .font(.system(.caption, weight: .black))
+                                .font(.system(.caption, weight: .semibold))
                                 .foregroundStyle(.black)
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 9)
@@ -466,22 +474,22 @@ struct DraftRoomView: View {
 
     private func bottomBar(_ room: DraftRoom) -> some View {
         GlassCard(cornerRadius: 0, material: .regularMaterial) {
-            HStack(spacing: 14) {
+            HStack(spacing: 12) {
                 HStack(spacing: 8) {
                     Image(systemName: "timer")
                     Text("\(remainingSeconds)s")
                 }
-                .font(.system(.headline, weight: .black))
+                .font(.system(.headline, weight: .semibold))
                 .foregroundStyle(.white)
-                .frame(width: 88)
+                .frame(width: 78)
 
                 ForEach(["🔥", "😮", "💀", "👏"], id: \.self) { emoji in
                     Button {
                         appModel.addReaction(roomID: room.id, emoji: emoji)
                     } label: {
                         Text(emoji)
-                            .font(.system(size: 22))
-                            .frame(width: 42, height: 42)
+                            .font(.system(size: 20))
+                            .frame(width: 38, height: 38)
                             .background(Color.white.opacity(0.08), in: Circle())
                     }
                     .buttonStyle(.plain)
@@ -492,7 +500,7 @@ struct DraftRoomView: View {
                 if room.status == .judging {
                     Button(action: onShowJudging) {
                         Image(systemName: "sparkles")
-                            .font(.system(size: 18, weight: .black))
+                            .font(.system(size: 18, weight: .semibold))
                             .foregroundStyle(.black)
                             .frame(width: 48, height: 48)
                             .background(Color.white, in: Circle())
@@ -536,11 +544,8 @@ struct JudgingView: View {
 
     var body: some View {
         ScreenScaffold {
-            VStack(alignment: .leading, spacing: 26) {
-                Text("how judging works")
-                    .font(.system(size: 48, weight: .black))
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.74)
+            VStack(alignment: .leading, spacing: 24) {
+                ScreenTitle(title: "Judging", subtitle: "The AI weighs fit, drama, and ceiling.", alignment: .center)
 
                 VStack(spacing: 14) {
                     JudgeCriteriaCard(symbol: "scope", title: "Fit", subtitle: "Does the team make sense for the category?")
@@ -574,7 +579,7 @@ private struct StepperRow: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.system(.headline, weight: .black))
+                .font(.system(.headline, weight: .semibold))
                 .foregroundStyle(.white)
             Spacer()
             HStack(spacing: 12) {
@@ -584,7 +589,7 @@ private struct StepperRow: View {
                     Image(systemName: "minus")
                 }
                 Text("\(value)")
-                    .font(.system(.title3, weight: .black))
+                    .font(.system(.title3, weight: .semibold))
                     .frame(width: 34)
                 Button {
                     value = min(range.upperBound, value + 1)
@@ -592,7 +597,7 @@ private struct StepperRow: View {
                     Image(systemName: "plus")
                 }
             }
-            .font(.system(.headline, weight: .black))
+            .font(.system(.headline, weight: .semibold))
             .foregroundStyle(.white)
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
@@ -607,27 +612,29 @@ private struct PickOptionCard: View {
 
     var body: some View {
         Button(action: action) {
-            GlassCard(cornerRadius: 28) {
-                VStack(alignment: .leading, spacing: 14) {
+            GlassCard(cornerRadius: 24) {
+                VStack(alignment: .leading, spacing: 13) {
                     HStack {
-                        CategorySymbol(symbol: option.imageSystemName, size: 56)
+                        CategorySymbol(symbol: option.imageSystemName, size: 48)
                         Spacer()
                         Image(systemName: "plus")
-                            .font(.system(size: 16, weight: .black))
+                            .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(.black)
-                            .frame(width: 34, height: 34)
+                            .frame(width: 32, height: 32)
                             .background(Color.white, in: Circle())
                     }
                     Text(option.name)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.78)
                     Text(option.detail)
                         .font(.system(.caption, weight: .semibold))
                         .foregroundStyle(DraftedColors.secondaryText)
                         .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxWidth: .infinity, minHeight: 178, alignment: .topLeading)
+                .frame(maxWidth: .infinity, minHeight: 160, alignment: .topLeading)
                 .padding(16)
             }
         }
@@ -649,7 +656,7 @@ private struct TradeSheet: View {
 
             AvatarView(player: player, size: 82)
             Text("Trade with \(player.displayName)?")
-                .font(.system(.title2, weight: .black))
+                .font(.system(.title2, weight: .semibold))
                 .foregroundStyle(.white)
             Text("Demo trades offer your latest pick for their latest pick.")
                 .font(.system(.subheadline, weight: .semibold))
@@ -674,10 +681,10 @@ private struct JudgeCriteriaCard: View {
     var body: some View {
         GlassCard(cornerRadius: 28) {
             HStack(spacing: 16) {
-                CategorySymbol(symbol: symbol, size: 62)
+                CategorySymbol(symbol: symbol, size: 52)
                 VStack(alignment: .leading, spacing: 5) {
                     Text(title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                     Text(subtitle)
                         .font(.system(.subheadline, weight: .semibold))

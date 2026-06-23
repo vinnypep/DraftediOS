@@ -70,7 +70,7 @@ struct OnboardingView: View {
                     Text("finally has")
                     Text("a scoreboard")
                 }
-                .font(.system(size: 58, weight: .black, design: .default))
+                .font(.system(size: 50, weight: .bold, design: .default))
                 .minimumScaleFactor(0.72)
                 .foregroundStyle(.white)
                 .tracking(0)
@@ -103,7 +103,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 26) {
             Spacer(minLength: 34)
             Text("what should friends call you?")
-                .font(.system(size: 48, weight: .black))
+                .font(.system(size: 42, weight: .bold))
                 .foregroundStyle(.white)
                 .minimumScaleFactor(0.72)
 
@@ -129,7 +129,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 24) {
             Spacer(minLength: 24)
             Text("pick your draft face")
-                .font(.system(size: 48, weight: .black))
+                .font(.system(size: 42, weight: .bold))
                 .foregroundStyle(.white)
                 .minimumScaleFactor(0.74)
 
@@ -178,7 +178,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 22) {
             Spacer(minLength: 20)
             Text("how it works")
-                .font(.system(size: 52, weight: .black))
+                .font(.system(size: 42, weight: .bold))
                 .foregroundStyle(.white)
 
             VStack(spacing: 14) {
@@ -195,7 +195,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 24) {
             Spacer(minLength: 18)
             Text("keep the room moving")
-                .font(.system(size: 48, weight: .black))
+                .font(.system(size: 42, weight: .bold))
                 .foregroundStyle(.white)
                 .minimumScaleFactor(0.74)
 
@@ -216,7 +216,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 28) {
             Spacer(minLength: 30)
             Text("you're on the clock")
-                .font(.system(size: 54, weight: .black))
+                .font(.system(size: 44, weight: .bold))
                 .foregroundStyle(.white)
                 .minimumScaleFactor(0.72)
 
@@ -226,7 +226,7 @@ struct OnboardingView: View {
                         AvatarView(profile: appModel.profile, size: 72)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(appModel.profile.username.isEmpty ? "Draft Captain" : appModel.profile.username)
-                                .font(.system(.title3, weight: .black))
+                                .font(.system(.title3, weight: .semibold))
                                 .foregroundStyle(.white)
                             Text("Level \(appModel.profile.level) - \(appModel.profile.xp) XP")
                                 .font(.system(.subheadline, weight: .semibold))
@@ -279,13 +279,13 @@ private struct FlowCard: View {
         GlassCard(cornerRadius: 26) {
             HStack(spacing: 16) {
                 Text(number)
-                    .font(.system(size: 24, weight: .black))
+                    .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.black)
                     .frame(width: 54, height: 54)
                     .background(Color.white, in: Circle())
                 VStack(alignment: .leading, spacing: 5) {
                     Text(title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                     Text(subtitle)
                         .font(.system(.subheadline, weight: .semibold))
@@ -310,7 +310,7 @@ private struct PermissionCard: View {
                 CategorySymbol(symbol: symbol, size: 64)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                     Text(subtitle)
                         .font(.system(.subheadline, weight: .semibold))

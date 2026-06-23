@@ -58,7 +58,7 @@ struct ResultsView: View {
 
         return VStack(alignment: .leading, spacing: 20) {
             Text("the winner is")
-                .font(.system(.headline, weight: .black))
+                .font(.system(.headline, weight: .semibold))
                 .foregroundStyle(DraftedColors.secondaryText)
                 .textCase(.uppercase)
 
@@ -68,7 +68,7 @@ struct ResultsView: View {
                         AvatarView(player: winner, size: 88)
                         VStack(alignment: .leading, spacing: 6) {
                             Text(winner?.displayName ?? "Winner")
-                                .font(.system(size: 42, weight: .black))
+                                .font(.system(size: 38, weight: .bold))
                                 .foregroundStyle(.white)
                                 .minimumScaleFactor(0.72)
                             Text(room.category.title)
@@ -78,7 +78,7 @@ struct ResultsView: View {
                     }
 
                     Text(result.headline)
-                        .font(.system(.title3, weight: .black))
+                        .font(.system(.title3, weight: .semibold))
                         .foregroundStyle(.white)
 
                     Text(result.summary)
@@ -99,14 +99,14 @@ struct ResultsView: View {
                 GlassCard(cornerRadius: 28) {
                     HStack(spacing: 16) {
                         Text("#\(index + 1)")
-                            .font(.system(.headline, weight: .black))
+                            .font(.system(.headline, weight: .semibold))
                             .foregroundStyle(.black)
                             .frame(width: 50, height: 50)
                             .background(Color.white, in: Circle())
 
                         VStack(alignment: .leading, spacing: 5) {
                             Text(score.playerName)
-                                .font(.system(.headline, weight: .black))
+                                .font(.system(.headline, weight: .semibold))
                                 .foregroundStyle(.white)
                             Text(score.verdict)
                                 .font(.system(.caption, weight: .semibold))
@@ -115,7 +115,7 @@ struct ResultsView: View {
                         }
                         Spacer()
                         Text("\(score.score)")
-                            .font(.system(size: 34, weight: .black))
+                            .font(.system(size: 32, weight: .bold))
                             .foregroundStyle(.white)
                     }
                     .padding(16)
@@ -135,7 +135,7 @@ struct ResultsView: View {
                         CategorySymbol(symbol: stat.symbol, size: 54)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(stat.title)
-                                .font(.system(.headline, weight: .black))
+                                .font(.system(.headline, weight: .semibold))
                                 .foregroundStyle(.white)
                             Text(stat.value)
                                 .font(.system(.subheadline, weight: .semibold))
@@ -189,4 +189,3 @@ private struct ConfettiView: View {
         .ignoresSafeArea()
     }
 }
-

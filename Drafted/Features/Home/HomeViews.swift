@@ -6,7 +6,7 @@ struct HomeView: View {
     var body: some View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 26) {
+                VStack(spacing: 24) {
                     profileHeader
 
                     NavigationLink(value: AppRoute.newDraft(categoryID: nil)) {
@@ -20,7 +20,7 @@ struct HomeView: View {
                     friendsActivity
                 }
                 .padding(.horizontal, 24)
-                .padding(.top, 14)
+                .padding(.top, 10)
                 .padding(.bottom, 32)
             }
         }
@@ -42,18 +42,23 @@ struct HomeView: View {
 
     private var profileHeader: some View {
         NavigationLink(value: AppRoute.profile) {
-            GlassCard(cornerRadius: 34, material: .regularMaterial) {
-                VStack(spacing: 18) {
+            GlassCard(cornerRadius: 28, material: .regularMaterial) {
+                VStack(spacing: 16) {
                     HStack(spacing: 16) {
-                        AvatarView(profile: appModel.profile, size: 76)
+                        AvatarView(profile: appModel.profile, size: 64)
                         VStack(alignment: .leading, spacing: 6) {
                             Text(appModel.profile.username)
-                                .font(.system(.title2, weight: .black))
+                                .font(.system(.title3, weight: .semibold))
                                 .foregroundStyle(.white)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.72)
                             Text("Level \(appModel.profile.level) - \(appModel.profile.xp) XP")
                                 .font(.system(.subheadline, weight: .bold))
                                 .foregroundStyle(DraftedColors.secondaryText)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.78)
                         }
+                        .layoutPriority(1)
                         Spacer()
                         Image(systemName: "chevron.right")
                             .font(.system(size: 16, weight: .bold))
@@ -61,7 +66,7 @@ struct HomeView: View {
                     }
                     XPProgressView(progress: Double(appModel.profile.xp) / Double(appModel.profile.xpForNextLevel))
                 }
-                .padding(22)
+                .padding(18)
             }
         }
         .buttonStyle(.plain)
@@ -134,16 +139,16 @@ struct DiscoverView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 22) {
-                    Text("choose the room's obsession")
-                        .font(.system(size: 42, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .minimumScaleFactor(0.78)
+                    ScreenTitle(
+                        title: "Choose a category",
+                        subtitle: "Pick the board your friends will argue about.",
+                        alignment: .center
+                    )
                         .padding(.horizontal, 24)
 
                     PillSelector(values: CategorySection.allCases, title: \.title, selection: $selectedSection)
 
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 16)], spacing: 16) {
                         ForEach(filteredCategories) { category in
                             NavigationLink(value: AppRoute.newDraft(categoryID: category.id)) {
                                 CategoryCard(category: category)
@@ -169,10 +174,7 @@ struct HistoryView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 18) {
-                    Text("receipts")
-                        .font(.system(size: 50, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ScreenTitle(title: "Results", subtitle: "Receipts, rematches, and judge notes.", alignment: .center)
 
                     if appModel.historyRooms.isEmpty {
                         EmptyStateView(title: "No results yet", subtitle: "Finish a draft and the judge will leave evidence here.", symbol: "doc.text.magnifyingglass")
@@ -197,23 +199,32 @@ struct HistoryView: View {
 
 private struct BigStartButton: View {
     var body: some View {
-        GlassCard(cornerRadius: 38, material: .regularMaterial) {
-            HStack(alignment: .center, spacing: 18) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("start a")
-                    Text("new draft")
+        GlassCard(cornerRadius: 30, material: .regularMaterial) {
+            HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Start a New Draft")
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.62)
+                    Text("Create a room, share a code, and start picking.")
+                        .font(.system(.subheadline, weight: .medium))
+                        .foregroundStyle(DraftedColors.secondaryText)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .font(.system(size: 40, weight: .black))
-                .foregroundStyle(.white)
-                .minimumScaleFactor(0.78)
-                Spacer()
+                .layoutPriority(1)
+
+                Spacer(minLength: 10)
+
                 Image(systemName: "arrow.right")
-                    .font(.system(size: 28, weight: .black))
+                    .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(.black)
-                    .frame(width: 70, height: 70)
+                    .frame(width: 52, height: 52)
                     .background(Color.white, in: Circle())
+                    .accessibilityHidden(true)
             }
-            .padding(24)
+            .padding(20)
         }
         .accessibilityLabel("Start a New Draft")
     }
@@ -223,26 +234,28 @@ struct CategoryCard: View {
     var category: DraftCategory
 
     var body: some View {
-        GlassCard(cornerRadius: 30) {
-            VStack(alignment: .leading, spacing: 16) {
+        GlassCard(cornerRadius: 24) {
+            VStack(alignment: .leading, spacing: 14) {
                 HStack {
-                    CategorySymbol(symbol: category.symbol, size: 58)
+                    CategorySymbol(symbol: category.symbol, size: 50)
                     Spacer()
-                    Image(systemName: "arrow.up.right")
-                        .font(.system(size: 15, weight: .black))
-                        .foregroundStyle(.white.opacity(0.70))
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.52))
                 }
                 Text(category.title)
-                    .font(.system(.title3, weight: .black))
+                    .font(.system(.headline, weight: .semibold))
                     .foregroundStyle(.white)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.82)
                 Text(category.subtitle)
                     .font(.system(.caption, weight: .semibold))
                     .foregroundStyle(DraftedColors.secondaryText)
                     .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(maxWidth: .infinity, minHeight: 190, alignment: .topLeading)
-            .padding(18)
+            .frame(maxWidth: .infinity, minHeight: 168, alignment: .topLeading)
+            .padding(16)
         }
     }
 }
@@ -251,26 +264,26 @@ struct RoomRow: View {
     var room: DraftRoom
 
     var body: some View {
-        GlassCard(cornerRadius: 28) {
+        GlassCard(cornerRadius: 24) {
             HStack(spacing: 16) {
-                CategorySymbol(symbol: room.category.symbol, size: 60)
+                CategorySymbol(symbol: room.category.symbol, size: 50)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(room.category.title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.78)
                     Text("\(room.code) - Round \(max(1, (room.currentPickIndex / max(room.players.count, 1)) + 1)) of \(room.rounds)")
                         .font(.system(.subheadline, weight: .semibold))
                         .foregroundStyle(DraftedColors.secondaryText)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.72)
                 }
+                .layoutPriority(1)
                 Spacer()
-                Text(room.status.rawValue.uppercased())
-                    .font(.system(size: 10, weight: .black))
-                    .foregroundStyle(.black)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 7)
-                    .background(Color.white, in: Capsule())
+                StatusPill(title: room.status.rawValue.uppercased(), isProminent: true)
             }
-            .padding(16)
+            .padding(15)
         }
     }
 }
@@ -279,22 +292,25 @@ struct ResultRow: View {
     var room: DraftRoom
 
     var body: some View {
-        GlassCard(cornerRadius: 28) {
+        GlassCard(cornerRadius: 24) {
             HStack(spacing: 16) {
-                CategorySymbol(symbol: "trophy.fill", size: 58)
+                CategorySymbol(symbol: "trophy.fill", size: 50)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(room.result?.headline ?? room.category.title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.82)
                     Text(room.result?.summary ?? "Waiting for judge.")
                         .font(.system(.subheadline, weight: .semibold))
                         .foregroundStyle(DraftedColors.secondaryText)
                         .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
+                .layoutPriority(1)
                 Spacer()
             }
-            .padding(16)
+            .padding(15)
         }
     }
 }

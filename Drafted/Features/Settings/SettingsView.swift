@@ -9,10 +9,7 @@ struct SettingsView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
-                    Text("settings")
-                        .font(.system(size: 52, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ScreenTitle(title: "Settings", subtitle: "Sound, touch, account, and sync.", alignment: .center)
 
                     SettingsToggleRow(title: "Draft music", subtitle: "Subtle room ambience during live drafts.", symbol: "music.note", isOn: appModel.musicEnabled) {
                         appModel.toggleMusic()
@@ -28,7 +25,7 @@ struct SettingsView: View {
                                 CategorySymbol(symbol: "icloud.fill", size: 58)
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(appModel.isFirebaseConfigured ? "Firebase ready" : "Demo mode")
-                                        .font(.system(.headline, weight: .black))
+                                        .font(.system(.headline, weight: .semibold))
                                         .foregroundStyle(.white)
                                     Text(appModel.isFirebaseConfigured ? "GoogleService-Info.plist detected." : "Add GoogleService-Info.plist to enable live sync.")
                                         .font(.system(.subheadline, weight: .semibold))
@@ -63,17 +60,14 @@ struct ProfileView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
-                    Text("profile")
-                        .font(.system(size: 52, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ScreenTitle(title: "Profile", subtitle: "Your draft name and avatar.", alignment: .center)
 
                     GlassCard(cornerRadius: 34, material: .regularMaterial) {
                         VStack(spacing: 22) {
                             AvatarView(profile: appModel.profile, size: 112)
 
                             TextField("Username", text: $appModel.profile.username)
-                                .font(.system(size: 28, weight: .black))
+                                .font(.system(size: 28, weight: .semibold))
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
                                 .padding(16)
@@ -141,7 +135,7 @@ private struct SettingsToggleRow: View {
                 CategorySymbol(symbol: symbol, size: 58)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title)
-                        .font(.system(.headline, weight: .black))
+                        .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.white)
                     Text(subtitle)
                         .font(.system(.subheadline, weight: .semibold))
@@ -172,11 +166,10 @@ private struct SignInWithAppleButtonView: View {
             Image(systemName: "apple.logo")
             Text("Sign in with Apple")
         }
-        .font(.system(.headline, weight: .black))
+        .font(.system(.headline, weight: .semibold))
         .foregroundStyle(.black)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 16)
         .background(Color.white, in: Capsule())
     }
 }
-

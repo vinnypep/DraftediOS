@@ -3,12 +3,12 @@ import SwiftUI
 import UIKit
 
 enum DraftedColors {
-    static let background = Color(red: 0.015, green: 0.015, blue: 0.018)
-    static let elevated = Color.white.opacity(0.055)
-    static let hairline = Color.white.opacity(0.18)
+    static let background = Color(red: 0.018, green: 0.018, blue: 0.021)
+    static let elevated = Color.white.opacity(0.045)
+    static let hairline = Color.white.opacity(0.14)
     static let primaryText = Color.white
-    static let secondaryText = Color.white.opacity(0.66)
-    static let tertiaryText = Color.white.opacity(0.42)
+    static let secondaryText = Color.white.opacity(0.62)
+    static let tertiaryText = Color.white.opacity(0.38)
 }
 
 struct ScreenScaffold<Content: View>: View {
@@ -27,7 +27,7 @@ struct ScreenScaffold<Content: View>: View {
 }
 
 struct GlassCard<Content: View>: View {
-    var cornerRadius: CGFloat = 28
+    var cornerRadius: CGFloat = 24
     var material: Material = .ultraThinMaterial
     let content: Content
 
@@ -44,7 +44,7 @@ struct GlassCard<Content: View>: View {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .stroke(DraftedColors.hairline, lineWidth: 1)
             }
-            .shadow(color: .black.opacity(0.32), radius: 22, x: 0, y: 14)
+            .shadow(color: .black.opacity(0.22), radius: 18, x: 0, y: 10)
     }
 }
 
@@ -58,13 +58,13 @@ struct GlassButton: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.system(size: 16, weight: .semibold))
                 Text(title)
-                    .font(.system(.headline, design: .default, weight: .bold))
+                    .font(.system(.headline, design: .default, weight: .semibold))
             }
             .foregroundStyle(isProminent ? .black : .white)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 18)
+            .padding(.vertical, 15)
             .padding(.horizontal, 20)
             .background(isProminent ? Color.white : DraftedColors.elevated, in: Capsule())
             .overlay {
@@ -83,7 +83,7 @@ struct CircleIconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(.white)
                 .frame(width: size, height: size)
                 .background(.ultraThinMaterial, in: Circle())
@@ -100,11 +100,11 @@ struct SectionHeader: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
-                .font(.system(.title3, design: .default, weight: .bold))
+                .font(.system(.headline, design: .default, weight: .semibold))
                 .foregroundStyle(.white)
             if let subtitle {
                 Text(subtitle)
-                    .font(.system(.subheadline, design: .default, weight: .medium))
+                    .font(.system(.footnote, design: .default, weight: .medium))
                     .foregroundStyle(DraftedColors.secondaryText)
             }
         }
@@ -163,11 +163,11 @@ struct CategorySymbol: View {
 
     var body: some View {
         Image(systemName: symbol)
-            .font(.system(size: size * 0.42, weight: .black))
+            .font(.system(size: size * 0.40, weight: .semibold))
             .foregroundStyle(.white)
             .frame(width: size, height: size)
             .background(.regularMaterial, in: Circle())
-            .overlay { Circle().stroke(Color.white.opacity(0.20), lineWidth: 1) }
+            .overlay { Circle().stroke(Color.white.opacity(0.16), lineWidth: 1) }
     }
 }
 
@@ -184,10 +184,10 @@ struct PillSelector<Value: Hashable & Identifiable>: View {
                         selection = value
                     } label: {
                         Text(title(value))
-                            .font(.system(.subheadline, design: .default, weight: .bold))
+                            .font(.system(.subheadline, design: .default, weight: .semibold))
                             .foregroundStyle(selection == value ? .black : .white)
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 9)
                             .background(selection == value ? Color.white : Color.white.opacity(0.08), in: Capsule())
                             .overlay { Capsule().stroke(Color.white.opacity(0.16), lineWidth: 1) }
                     }
@@ -225,12 +225,88 @@ struct EmptyStateView: View {
     }
 }
 
+enum ScreenTitleAlignment {
+    case leading
+    case center
+
+    var horizontal: HorizontalAlignment {
+        switch self {
+        case .leading:
+            return .leading
+        case .center:
+            return .center
+        }
+    }
+
+    var text: TextAlignment {
+        switch self {
+        case .leading:
+            return .leading
+        case .center:
+            return .center
+        }
+    }
+
+    var frame: Alignment {
+        switch self {
+        case .leading:
+            return .leading
+        case .center:
+            return .center
+        }
+    }
+}
+
+struct ScreenTitle: View {
+    var title: String
+    var subtitle: String?
+    var alignment: ScreenTitleAlignment = .leading
+
+    var body: some View {
+        VStack(alignment: alignment.horizontal, spacing: 8) {
+            Text(title)
+                .font(.system(size: 34, weight: .bold))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(alignment.text)
+                .lineLimit(3)
+                .minimumScaleFactor(0.76)
+
+            if let subtitle {
+                Text(subtitle)
+                    .font(.system(.subheadline, weight: .medium))
+                    .foregroundStyle(DraftedColors.secondaryText)
+                    .multilineTextAlignment(alignment.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: alignment.frame)
+    }
+}
+
+struct StatusPill: View {
+    var title: String
+    var isProminent = false
+
+    var body: some View {
+        Text(title)
+            .font(.system(.caption, weight: .semibold))
+            .foregroundStyle(isProminent ? .black : .white)
+            .lineLimit(1)
+            .padding(.horizontal, 11)
+            .padding(.vertical, 7)
+            .background(isProminent ? Color.white : Color.white.opacity(0.08), in: Capsule())
+            .overlay {
+                Capsule().stroke(Color.white.opacity(isProminent ? 0 : 0.14), lineWidth: 1)
+            }
+    }
+}
+
 struct FloatingSticker: View {
     var symbol: String
 
     var body: some View {
         Image(systemName: symbol)
-            .font(.system(size: 16, weight: .black))
+            .font(.system(size: 16, weight: .semibold))
             .foregroundStyle(.white)
             .shadow(color: .white.opacity(0.45), radius: 8)
             .accessibilityHidden(true)
@@ -244,4 +320,3 @@ extension View {
             .toolbarBackground(.hidden, for: .navigationBar)
     }
 }
-
