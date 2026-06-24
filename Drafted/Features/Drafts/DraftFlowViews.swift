@@ -36,7 +36,7 @@ struct NewDraftView: View {
             ScreenTitle(
                 title: "New Draft",
                 subtitle: "Choose a category, then set up the room.",
-                alignment: .center
+                isCentered: true
             )
                 .padding(.horizontal, 24)
 
@@ -138,7 +138,7 @@ struct JoinCodeView: View {
     var body: some View {
         ScreenScaffold {
             VStack(alignment: .leading, spacing: 24) {
-                ScreenTitle(title: "Join Draft", subtitle: "Enter a room code from a friend.", alignment: .center)
+                ScreenTitle(title: "Join Draft", subtitle: "Enter a room code from a friend.", isCentered: true)
 
                 GlassCard(cornerRadius: 28, material: .regularMaterial) {
                     VStack(spacing: 20) {
@@ -545,7 +545,7 @@ struct JudgingView: View {
     var body: some View {
         ScreenScaffold {
             VStack(alignment: .leading, spacing: 24) {
-                ScreenTitle(title: "Judging", subtitle: "The AI weighs fit, drama, and ceiling.", alignment: .center)
+                ScreenTitle(title: "Judging", subtitle: "The AI weighs fit, drama, and ceiling.", isCentered: true)
 
                 VStack(spacing: 14) {
                     JudgeCriteriaCard(symbol: "scope", title: "Fit", subtitle: "Does the team make sense for the category?")

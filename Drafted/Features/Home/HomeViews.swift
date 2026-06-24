@@ -142,7 +142,7 @@ struct DiscoverView: View {
                     ScreenTitle(
                         title: "Choose a category",
                         subtitle: "Pick the board your friends will argue about.",
-                        alignment: .center
+                        isCentered: true
                     )
                         .padding(.horizontal, 24)
 
@@ -174,7 +174,7 @@ struct HistoryView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 18) {
-                    ScreenTitle(title: "Results", subtitle: "Receipts, rematches, and judge notes.", alignment: .center)
+                    ScreenTitle(title: "Results", subtitle: "Receipts, rematches, and judge notes.", isCentered: true)
 
                     if appModel.historyRooms.isEmpty {
                         EmptyStateView(title: "No results yet", subtitle: "Finish a draft and the judge will leave evidence here.", symbol: "doc.text.magnifyingglass")

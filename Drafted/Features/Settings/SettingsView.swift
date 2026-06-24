@@ -9,7 +9,7 @@ struct SettingsView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
-                    ScreenTitle(title: "Settings", subtitle: "Sound, touch, account, and sync.", alignment: .center)
+                    ScreenTitle(title: "Settings", subtitle: "Sound, touch, account, and sync.", isCentered: true)
 
                     SettingsToggleRow(title: "Draft music", subtitle: "Subtle room ambience during live drafts.", symbol: "music.note", isOn: appModel.musicEnabled) {
                         appModel.toggleMusic()
@@ -60,7 +60,7 @@ struct ProfileView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
-                    ScreenTitle(title: "Profile", subtitle: "Your draft name and avatar.", alignment: .center)
+                    ScreenTitle(title: "Profile", subtitle: "Your draft name and avatar.", isCentered: true)
 
                     GlassCard(cornerRadius: 34, material: .regularMaterial) {
                         VStack(spacing: 22) {

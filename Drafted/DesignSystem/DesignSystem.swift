@@ -225,49 +225,23 @@ struct EmptyStateView: View {
     }
 }
 
-enum ScreenTitleAlignment {
-    case leading
-    case center
-
-    var horizontal: HorizontalAlignment {
-        switch self {
-        case .leading:
-            return .leading
-        case .center:
-            return .center
-        }
-    }
-
-    var text: TextAlignment {
-        switch self {
-        case .leading:
-            return .leading
-        case .center:
-            return .center
-        }
-    }
-
-    var frame: Alignment {
-        switch self {
-        case .leading:
-            return .leading
-        case .center:
-            return .center
-        }
-    }
-}
-
 struct ScreenTitle: View {
     var title: String
     var subtitle: String?
-    var alignment: ScreenTitleAlignment = .leading
+    var isCentered = false
+
+    init(title: String, subtitle: String?, isCentered: Bool = false) {
+        self.title = title
+        self.subtitle = subtitle
+        self.isCentered = isCentered
+    }
 
     var body: some View {
-        VStack(alignment: alignment.horizontal, spacing: 8) {
+        VStack(alignment: isCentered ? .center : .leading, spacing: 8) {
             Text(title)
                 .font(.system(size: 34, weight: .bold))
                 .foregroundStyle(.white)
-                .multilineTextAlignment(alignment.text)
+                .multilineTextAlignment(isCentered ? .center : .leading)
                 .lineLimit(3)
                 .minimumScaleFactor(0.76)
 
@@ -275,11 +249,11 @@ struct ScreenTitle: View {
                 Text(subtitle)
                     .font(.system(.subheadline, weight: .medium))
                     .foregroundStyle(DraftedColors.secondaryText)
-                    .multilineTextAlignment(alignment.text)
+                    .multilineTextAlignment(isCentered ? .center : .leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .frame(maxWidth: .infinity, alignment: alignment.frame)
+        .frame(maxWidth: .infinity, alignment: isCentered ? .center : .leading)
     }
 }
 
