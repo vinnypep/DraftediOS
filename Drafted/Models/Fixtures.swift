@@ -40,9 +40,9 @@ enum DraftFixtures {
     ]
 
     static let activity: [ActivityItem] = [
-        ActivityItem(id: "a1", title: "Mia won Movie Legends", subtitle: "Her villain-heavy board scored 91.", symbol: "trophy.fill", createdAt: Date()),
-        ActivityItem(id: "a2", title: "Jordan stole the final pick", subtitle: "One life spent, group chat activated.", symbol: "bolt.fill", createdAt: Date()),
-        ActivityItem(id: "a3", title: "New category trending", subtitle: "Music Moments is heating up tonight.", symbol: "music.note", createdAt: Date())
+        ActivityItem(id: "a1", title: "Mia won Movie Legends", subtitle: "Score: 91", symbol: "trophy.fill", createdAt: Date()),
+        ActivityItem(id: "a2", title: "Jordan used a steal", subtitle: "Final round", symbol: "bolt.fill", createdAt: Date()),
+        ActivityItem(id: "a3", title: "Music Moments", subtitle: "Trending", symbol: "music.note", createdAt: Date())
     ]
 
     static let historyRooms: [DraftRoom] = {
