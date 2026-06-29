@@ -26,17 +26,17 @@ enum DraftFixtures {
     ]
 
     static let categories: [DraftCategory] = [
-        DraftCategory(id: "sports-icons", title: "Sports Icons", subtitle: "GOATs, dynasties, and unreal highlight reels.", symbol: "figure.run", tags: [.trending, .popular, .friends]),
-        DraftCategory(id: "movie-legends", title: "Movie Legends", subtitle: "Draft the actors, roles, and scenes everyone quotes.", symbol: "movieclapper.fill", tags: [.popular, .friends]),
-        DraftCategory(id: "music-moments", title: "Music Moments", subtitle: "Anthems, albums, performances, and chaos.", symbol: "music.mic", tags: [.trending, .new]),
-        DraftCategory(id: "viral-memes", title: "Viral Memes", subtitle: "The internet's loudest inside jokes.", symbol: "bubble.left.and.bubble.right.fill", tags: [.trending, .friends]),
-        DraftCategory(id: "tv-shows", title: "TV Shows", subtitle: "Comfort classics, prestige drama, and guilty pleasures.", symbol: "tv.fill", tags: [.popular, .friends]),
-        DraftCategory(id: "video-games", title: "Video Games", subtitle: "Franchises, bosses, worlds, and legendary consoles.", symbol: "gamecontroller.fill", tags: [.trending, .popular]),
-        DraftCategory(id: "anime-icons", title: "Anime Icons", subtitle: "Heroes, villains, arcs, and transformation moments.", symbol: "sparkle.magnifyingglass", tags: [.new, .friends]),
-        DraftCategory(id: "history-legends", title: "History Legends", subtitle: "The names that would dominate any group chat.", symbol: "building.columns.fill", tags: [.new]),
-        DraftCategory(id: "food-drink", title: "Food & Drink", subtitle: "Snacks, meals, late-night orders, and elite beverages.", symbol: "fork.knife", tags: [.popular, .friends]),
-        DraftCategory(id: "books-literature", title: "Books & Literature", subtitle: "Characters, worlds, authors, and plot twists.", symbol: "book.closed.fill", tags: [.new]),
-        DraftCategory(id: "custom", title: "Custom Draft", subtitle: "Bring your own category and let the room decide.", symbol: "square.and.pencil", tags: [.friends, .new])
+        DraftCategory(id: "sports-icons", title: "Sports Icons", subtitle: "Athletes, teams, and moments.", symbol: "figure.run", tags: [.trending, .popular, .friends]),
+        DraftCategory(id: "movie-legends", title: "Movie Legends", subtitle: "Actors, roles, and scenes.", symbol: "movieclapper.fill", tags: [.popular, .friends]),
+        DraftCategory(id: "music-moments", title: "Music Moments", subtitle: "Songs, albums, and performances.", symbol: "music.mic", tags: [.trending, .new]),
+        DraftCategory(id: "viral-memes", title: "Viral Memes", subtitle: "Posts, clips, and internet moments.", symbol: "bubble.left.and.bubble.right.fill", tags: [.trending, .friends]),
+        DraftCategory(id: "tv-shows", title: "TV Shows", subtitle: "Series, episodes, and characters.", symbol: "tv.fill", tags: [.popular, .friends]),
+        DraftCategory(id: "video-games", title: "Video Games", subtitle: "Franchises, bosses, and worlds.", symbol: "gamecontroller.fill", tags: [.trending, .popular]),
+        DraftCategory(id: "anime-icons", title: "Anime Icons", subtitle: "Characters, arcs, and battles.", symbol: "sparkle.magnifyingglass", tags: [.new, .friends]),
+        DraftCategory(id: "history-legends", title: "History Legends", subtitle: "People, eras, and events.", symbol: "building.columns.fill", tags: [.new]),
+        DraftCategory(id: "food-drink", title: "Food & Drink", subtitle: "Meals, snacks, and drinks.", symbol: "fork.knife", tags: [.popular, .friends]),
+        DraftCategory(id: "books-literature", title: "Books & Literature", subtitle: "Books, authors, and characters.", symbol: "book.closed.fill", tags: [.new]),
+        DraftCategory(id: "custom", title: "Custom Draft", subtitle: "Create your own category.", symbol: "square.and.pencil", tags: [.friends, .new])
     ]
 
     static let activity: [ActivityItem] = [
@@ -55,15 +55,15 @@ enum DraftFixtures {
         room.result = JudgeResult(
             id: "result-demo",
             winnerPlayerID: currentUser.id,
-            headline: "Owen wins by taste and timing.",
-            summary: "The board was clean, surprisingly emotional, and only a little bit ruthless.",
+            headline: "Owen wins Movie Legends.",
+            summary: "Final score: 92.",
             teamScores: [
-                TeamScore(id: "s1", playerID: currentUser.id, playerName: "Owen", score: 92, verdict: "Premium board. Strong closer."),
-                TeamScore(id: "s2", playerID: "user-mia", playerName: "Mia", score: 87, verdict: "High ceiling, one risky reach.")
+                TeamScore(id: "s1", playerID: currentUser.id, playerName: "Owen", score: 92, verdict: "Best overall roster."),
+                TeamScore(id: "s2", playerID: "user-mia", playerName: "Mia", score: 87, verdict: "Second place.")
             ],
             funStats: [
                 FunStat(id: "f1", title: "Biggest Sleeper", value: "The Final Monologue", symbol: "moon.fill"),
-                FunStat(id: "f2", title: "Most Questionable", value: "Reboot Energy", symbol: "questionmark.circle.fill")
+                FunStat(id: "f2", title: "Lowest Pick", value: "Reboot Energy", symbol: "questionmark.circle.fill")
             ],
             createdAt: Date()
         )
@@ -103,21 +103,21 @@ enum DraftFixtures {
 
     static func options(for category: DraftCategory) -> [DraftPickOption] {
         let base: [(String, String, String)] = [
-            ("The Untouchable One Seed", "Obvious pick, impossible to hate.", "1.circle.fill"),
-            ("Sleeper With Aura", "Late-round energy hiding in plain sight.", "moon.stars.fill"),
-            ("Chaotic Crowd Pleaser", "Everyone laughs, then everyone regrets passing.", "party.popper.fill"),
-            ("Legacy Pick", "Decades of reputation in one slot.", "crown.fill"),
-            ("Deep Cut", "For people who really know the category.", "scope"),
-            ("The Villain Board", "Questionable taste, incredible entertainment.", "theatermasks.fill"),
-            ("Instant Group Chat War", "Guaranteed debate before the timer ends.", "bubble.left.and.bubble.right.fill"),
-            ("The Comfort Classic", "No flash, just undeniable staying power.", "heart.fill"),
-            ("The Technical Masterpiece", "Judges love the craft. Friends love the flex.", "gearshape.2.fill"),
-            ("Final Round Theft", "A pick that should never have survived.", "bolt.fill"),
-            ("Peak Nostalgia", "The room gets quiet for the right reasons.", "clock.fill"),
-            ("Wildcard Genius", "Could win the room or end the friendship.", "dice.fill"),
-            ("Main Character Energy", "Big entrance, bigger expectations.", "person.crop.circle.badge.star"),
-            ("Cult Favorite", "Small fanbase, enormous conviction.", "star.bubble.fill"),
-            ("The Closer", "The exact pick you want in the final reveal.", "flag.checkered")
+            ("Top Seed", "Best available pick.", "1.circle.fill"),
+            ("Sleeper Pick", "Strong late-round option.", "moon.stars.fill"),
+            ("Popular Pick", "High-demand board item.", "party.popper.fill"),
+            ("Legacy Pick", "Long-term reputation.", "crown.fill"),
+            ("Deep Cut", "Category-specific pick.", "scope"),
+            ("Rival Pick", "Strong opposing choice.", "theatermasks.fill"),
+            ("Debate Pick", "Likely to split the room.", "bubble.left.and.bubble.right.fill"),
+            ("Classic Pick", "Reliable roster choice.", "heart.fill"),
+            ("Technical Pick", "Strong on details.", "gearshape.2.fill"),
+            ("Late Steal", "Available late in the draft.", "bolt.fill"),
+            ("Nostalgia Pick", "Older favorite.", "clock.fill"),
+            ("Wildcard", "High-variance choice.", "dice.fill"),
+            ("Lead Pick", "Strong top-line option.", "person.crop.circle.badge.star"),
+            ("Cult Favorite", "Niche pick.", "star.bubble.fill"),
+            ("Closer", "Good final pick.", "flag.checkered")
         ]
 
         return (0..<60).map { index in

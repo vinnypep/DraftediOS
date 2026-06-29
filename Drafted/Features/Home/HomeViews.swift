@@ -164,7 +164,7 @@ struct DiscoverView: View {
                 VStack(spacing: 22) {
                     ScreenTitle(
                         title: "Choose a category",
-                        subtitle: "Pick the board your friends will argue about.",
+                        subtitle: "Pick a draft category.",
                         isCentered: true
                     )
                         .padding(.horizontal, 24)
@@ -197,10 +197,10 @@ struct HistoryView: View {
         ScreenScaffold {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 18) {
-                    ScreenTitle(title: "Results", subtitle: "Receipts, rematches, and judge notes.", isCentered: true)
+                    ScreenTitle(title: "Results", subtitle: "Past drafts and rematches.", isCentered: true)
 
                     if appModel.historyRooms.isEmpty {
-                        EmptyStateView(title: "No results yet", subtitle: "Finish a draft and the judge will leave evidence here.", symbol: "doc.text.magnifyingglass")
+                        EmptyStateView(title: "No results yet", subtitle: "Finished drafts appear here.", symbol: "doc.text.magnifyingglass")
                     } else {
                         ForEach(appModel.historyRooms) { room in
                             NavigationLink(value: AppRoute.results(room.id)) {

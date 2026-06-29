@@ -11,11 +11,11 @@ struct SettingsView: View {
                 VStack(spacing: 20) {
                     ScreenTitle(title: "Settings", subtitle: "Sound, touch, account, and sync.", isCentered: true)
 
-                    SettingsToggleRow(title: "Draft music", subtitle: "Subtle room ambience during live drafts.", symbol: "music.note", isOn: appModel.musicEnabled) {
+                    SettingsToggleRow(title: "Draft music", subtitle: "Background audio during drafts.", symbol: "music.note", isOn: appModel.musicEnabled) {
                         appModel.toggleMusic()
                     }
 
-                    SettingsToggleRow(title: "Haptics", subtitle: "Taps, picks, steals, and reveals feel alive.", symbol: "hand.tap.fill", isOn: appModel.hapticsEnabled) {
+                    SettingsToggleRow(title: "Haptics", subtitle: "Feedback for taps and picks.", symbol: "hand.tap.fill", isOn: appModel.hapticsEnabled) {
                         appModel.toggleHaptics()
                     }
 

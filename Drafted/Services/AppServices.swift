@@ -194,18 +194,18 @@ struct MockJudgeService: JudgeServicing {
         .sorted { $0.score > $1.score }
 
         let winner = scores.first?.playerID ?? room.players[0].id
-        let sleeper = room.picks.sorted { $0.pickNumber > $1.pickNumber }.first?.name ?? "No sleeper emerged"
-        let steal = room.picks.first(where: \.isSteal)?.name ?? "No thefts, suspiciously polite"
+        let sleeper = room.picks.sorted { $0.pickNumber > $1.pickNumber }.first?.name ?? "None"
+        let steal = room.picks.first(where: \.isSteal)?.name ?? "None"
 
         return JudgeResult(
             id: UUID().uuidString,
             winnerPlayerID: winner,
             headline: "\(scores.first?.playerName ?? "The room") wins the draft.",
-            summary: "The AI judge liked the board control, punished a few reaches, and rewarded anyone brave enough to spend a life.",
+            summary: "Final scores are ready.",
             teamScores: scores,
             funStats: [
                 FunStat(id: "sleeper", title: "Biggest Sleeper", value: sleeper, symbol: "moon.fill"),
-                FunStat(id: "questionable", title: "Most Questionable", value: room.picks.dropFirst().first?.name ?? "The empty board", symbol: "questionmark.circle.fill"),
+                FunStat(id: "questionable", title: "Lowest Pick", value: room.picks.dropFirst().first?.name ?? "None", symbol: "questionmark.circle.fill"),
                 FunStat(id: "steal", title: "Top Steal", value: steal, symbol: "bolt.fill")
             ],
             createdAt: Date()
@@ -214,10 +214,10 @@ struct MockJudgeService: JudgeServicing {
 
     private func verdict(for score: Int) -> String {
         switch score {
-        case 94...: "Dominant. Clean picks, high ceiling, zero wasted motion."
-        case 88...: "Strong room control with one spicy reach."
-        case 80...: "Respectable board. Needed one louder swing."
-        default: "Fun, chaotic, and legally still a draft."
+        case 94...: "First place."
+        case 88...: "Top roster."
+        case 80...: "Solid roster."
+        default: "Needs stronger picks."
         }
     }
 }

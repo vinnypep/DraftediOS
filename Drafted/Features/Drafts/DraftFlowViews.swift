@@ -305,7 +305,7 @@ struct DraftRoomView: View {
                         .foregroundStyle(.white)
                         .lineLimit(2)
                         .minimumScaleFactor(0.78)
-                    Text(room.status == .judging ? "All picks are in. Send it to the judge." : "Timer is live. Make it count.")
+                    Text(room.status == .judging ? "All picks are in." : "Timer is live.")
                         .font(.system(.subheadline, weight: .semibold))
                         .foregroundStyle(DraftedColors.secondaryText)
                         .fixedSize(horizontal: false, vertical: true)
@@ -359,7 +359,7 @@ struct DraftRoomView: View {
 
     private func rosters(_ room: DraftRoom) -> some View {
         VStack(spacing: 14) {
-            SectionHeader(title: "Live Rosters", subtitle: "Tap a rival pick to steal it for one life.")
+            SectionHeader(title: "Live Rosters", subtitle: "Tap a pick to steal it for one life.")
             ForEach(room.players) { player in
                 GlassCard(cornerRadius: 24) {
                     VStack(alignment: .leading, spacing: 14) {
@@ -545,12 +545,12 @@ struct JudgingView: View {
     var body: some View {
         ScreenScaffold {
             VStack(alignment: .leading, spacing: 24) {
-                ScreenTitle(title: "Judging", subtitle: "The AI weighs fit, drama, and ceiling.", isCentered: true)
+                ScreenTitle(title: "Judging", subtitle: "Review the scoring criteria.", isCentered: true)
 
                 VStack(spacing: 14) {
-                    JudgeCriteriaCard(symbol: "scope", title: "Fit", subtitle: "Does the team make sense for the category?")
-                    JudgeCriteriaCard(symbol: "bolt.fill", title: "Drama", subtitle: "Were there steals, reaches, or momentum swings?")
-                    JudgeCriteriaCard(symbol: "crown.fill", title: "Ceiling", subtitle: "Which roster can actually win the room?")
+                    JudgeCriteriaCard(symbol: "scope", title: "Fit", subtitle: "Category match.")
+                    JudgeCriteriaCard(symbol: "bolt.fill", title: "Value", subtitle: "Pick timing and steals.")
+                    JudgeCriteriaCard(symbol: "crown.fill", title: "Roster", subtitle: "Overall team strength.")
                 }
 
                 Spacer()
@@ -658,7 +658,7 @@ private struct TradeSheet: View {
             Text("Trade with \(player.displayName)?")
                 .font(.system(.title2, weight: .semibold))
                 .foregroundStyle(.white)
-            Text("Demo trades offer your latest pick for their latest pick.")
+            Text("Swap your latest pick for theirs.")
                 .font(.system(.subheadline, weight: .semibold))
                 .foregroundStyle(DraftedColors.secondaryText)
                 .multilineTextAlignment(.center)
