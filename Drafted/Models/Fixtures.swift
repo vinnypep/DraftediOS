@@ -123,7 +123,7 @@ enum DraftFixtures {
         return (0..<60).map { index in
             let value = base[index % base.count]
             let themed = themedName(for: category, seed: index, fallback: value.0)
-            DraftPickOption(
+            return DraftPickOption(
                 id: "\(category.id)-\(index)",
                 name: index < 15 ? themed : "\(themed) \(index + 1)",
                 detail: value.1,
