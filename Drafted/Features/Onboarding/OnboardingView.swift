@@ -159,12 +159,6 @@ struct OnboardingView: View {
                     .font(.system(size: 42, weight: .bold))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-
-                Text("A quick draft, a cleaner board, and a reveal everyone can argue about.")
-                    .font(.system(.headline, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.62))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(3)
             }
 
             VStack(spacing: 0) {
@@ -350,36 +344,36 @@ private struct DraftedHeroIcon: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            Color(red: 0.08, green: 0.42, blue: 1.0),
-                            Color(red: 0.04, green: 0.18, blue: 0.62)
+                            Color(red: 0.10, green: 0.43, blue: 0.98),
+                            Color(red: 0.03, green: 0.16, blue: 0.52)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
                 .frame(width: 188, height: 188)
-                .shadow(color: Color(red: 0.04, green: 0.32, blue: 0.95).opacity(0.48), radius: 38, x: 0, y: 24)
+                .shadow(color: Color(red: 0.04, green: 0.28, blue: 0.82).opacity(0.42), radius: 34, x: 0, y: 22)
                 .overlay {
                     RoundedRectangle(cornerRadius: 48, style: .continuous)
                         .stroke(Color.white.opacity(0.20), lineWidth: 1)
                 }
 
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(Color.white.opacity(0.24))
-                .frame(width: 88, height: 116)
-                .rotationEffect(.degrees(-14))
-                .offset(x: -22, y: 10)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(Color.white.opacity(0.22), lineWidth: 3)
+                .frame(width: 108, height: 132)
+                .rotationEffect(.degrees(-8))
+                .offset(x: -14, y: 4)
 
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(Color.white.opacity(0.36))
-                .frame(width: 88, height: 116)
-                .rotationEffect(.degrees(14))
-                .offset(x: 24, y: -2)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(Color.white.opacity(0.16))
+                .frame(width: 108, height: 132)
+                .rotationEffect(.degrees(8))
+                .offset(x: 14, y: -4)
 
-            Image(systemName: "trophy.fill")
-                .font(.system(size: 62, weight: .bold))
-                .foregroundStyle(.white.opacity(0.92))
-                .shadow(color: .black.opacity(0.18), radius: 14, x: 0, y: 8)
+            Text("D")
+                .font(.system(size: 82, weight: .heavy))
+                .foregroundStyle(.white)
+                .shadow(color: .black.opacity(0.16), radius: 10, x: 0, y: 7)
         }
         .accessibilityHidden(true)
     }

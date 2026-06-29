@@ -8,9 +8,9 @@ enum DraftFixtures {
         username: "Owen",
         avatarPreset: "face.smiling.inverse",
         avatarImageData: nil,
-        level: 7,
-        xp: 640,
-        xpForNextLevel: 900,
+        level: 1,
+        xp: 0,
+        xpForNextLevel: 100,
         signInProvider: .anonymous
     )
 
