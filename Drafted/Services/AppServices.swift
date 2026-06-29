@@ -194,18 +194,18 @@ struct MockJudgeService: JudgeServicing {
         .sorted { $0.score > $1.score }
 
         let winner = scores.first?.playerID ?? room.players[0].id
-        let sleeper = room.picks.sorted { $0.pickNumber > $1.pickNumber }.first?.name ?? "None"
-        let steal = room.picks.first(where: \.isSteal)?.name ?? "None"
+        let sleeper = room.picks.sorted { $0.pickNumber > $1.pickNumber }.first?.name ?? "No sleeper. Very polite room."
+        let steal = room.picks.first(where: \.isSteal)?.name ?? "No steals. Everyone behaved."
 
         return JudgeResult(
             id: UUID().uuidString,
             winnerPlayerID: winner,
             headline: "\(scores.first?.playerName ?? "The room") wins the draft.",
-            summary: "Final scores are ready.",
+            summary: "The judge liked the roster balance, rewarded smart steals, and noticed every reach.",
             teamScores: scores,
             funStats: [
                 FunStat(id: "sleeper", title: "Biggest Sleeper", value: sleeper, symbol: "moon.fill"),
-                FunStat(id: "questionable", title: "Lowest Pick", value: room.picks.dropFirst().first?.name ?? "None", symbol: "questionmark.circle.fill"),
+                FunStat(id: "questionable", title: "Most Questionable Pick", value: room.picks.dropFirst().first?.name ?? "No notes. Suspicious.", symbol: "questionmark.circle.fill"),
                 FunStat(id: "steal", title: "Top Steal", value: steal, symbol: "bolt.fill")
             ],
             createdAt: Date()
@@ -214,10 +214,10 @@ struct MockJudgeService: JudgeServicing {
 
     private func verdict(for score: Int) -> String {
         switch score {
-        case 94...: "First place."
-        case 88...: "Top roster."
-        case 80...: "Solid roster."
-        default: "Needs stronger picks."
+        case 94...: "Dominant board. The judge barely had to think."
+        case 88...: "Strong roster with one pick the room will debate."
+        case 80...: "Solid team. Needed one bigger swing."
+        default: "Fun board, but the judge wanted more firepower."
         }
     }
 }

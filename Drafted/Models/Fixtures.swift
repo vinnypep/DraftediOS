@@ -55,15 +55,15 @@ enum DraftFixtures {
         room.result = JudgeResult(
             id: "result-demo",
             winnerPlayerID: currentUser.id,
-            headline: "Owen wins Movie Legends.",
-            summary: "Final score: 92.",
+            headline: "Owen wins by owning the final round.",
+            summary: "The judge liked the top-end picks, respected the closer, and had questions for the rest of the room.",
             teamScores: [
-                TeamScore(id: "s1", playerID: currentUser.id, playerName: "Owen", score: 92, verdict: "Best overall roster."),
-                TeamScore(id: "s2", playerID: "user-mia", playerName: "Mia", score: 87, verdict: "Second place.")
+                TeamScore(id: "s1", playerID: currentUser.id, playerName: "Owen", score: 92, verdict: "Best overall roster. Clean start, strong finish."),
+                TeamScore(id: "s2", playerID: "user-mia", playerName: "Mia", score: 87, verdict: "Good board. One reach kept it out of first.")
             ],
             funStats: [
                 FunStat(id: "f1", title: "Biggest Sleeper", value: "The Final Monologue", symbol: "moon.fill"),
-                FunStat(id: "f2", title: "Lowest Pick", value: "Reboot Energy", symbol: "questionmark.circle.fill")
+                FunStat(id: "f2", title: "Most Questionable Pick", value: "Reboot Energy", symbol: "questionmark.circle.fill")
             ],
             createdAt: Date()
         )
