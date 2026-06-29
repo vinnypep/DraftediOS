@@ -253,7 +253,7 @@ struct DraftRoomView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(room.code)
-                            .font(.system(.headline, weight: .semibold, design: .monospaced))
+                            .font(.system(.headline, design: .monospaced, weight: .semibold))
                             .foregroundStyle(.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.72)

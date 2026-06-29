@@ -73,6 +73,7 @@ struct ServiceFactory {
     let music: any MusicServicing
     let haptics: any HapticsServicing
 
+    @MainActor
     init(firebaseReady: Bool) {
         if firebaseReady {
             auth = FirebaseAuthService()
